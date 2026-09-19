@@ -47,8 +47,8 @@ export const HardwareSpecsGrid = ({ onOpenDataSheet }) => {
             {/* Spec Features Itemized Grid */}
             <div className="space-y-4 mb-6">
               <div className="flex gap-3 items-start">
-                <div className="w-6 h-6 rounded-lg bg-red-500/15 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check size={14} className="text-red-600 dark:text-red-400" />
+                <div className="w-6 h-6 rounded-lg bg-sky-500/15 flex items-center justify-center shrink-0 mt-0.5">
+                  <Check size={14} className="text-sky-600 dark:text-sky-400" />
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm font-bold text-foreground">
@@ -61,8 +61,8 @@ export const HardwareSpecsGrid = ({ onOpenDataSheet }) => {
               </div>
 
               <div className="flex gap-3 items-start">
-                <div className="w-6 h-6 rounded-lg bg-red-500/15 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check size={14} className="text-red-600 dark:text-red-400" />
+                <div className="w-6 h-6 rounded-lg bg-sky-500/15 flex items-center justify-center shrink-0 mt-0.5">
+                  <Check size={14} className="text-sky-600 dark:text-sky-400" />
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm font-bold text-foreground">
@@ -75,8 +75,8 @@ export const HardwareSpecsGrid = ({ onOpenDataSheet }) => {
               </div>
 
               <div className="flex gap-3 items-start">
-                <div className="w-6 h-6 rounded-lg bg-red-500/15 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check size={14} className="text-red-600 dark:text-red-400" />
+                <div className="w-6 h-6 rounded-lg bg-sky-500/15 flex items-center justify-center shrink-0 mt-0.5">
+                  <Check size={14} className="text-sky-600 dark:text-sky-400" />
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm font-bold text-foreground">
@@ -89,8 +89,8 @@ export const HardwareSpecsGrid = ({ onOpenDataSheet }) => {
               </div>
 
               <div className="flex gap-3 items-start">
-                <div className="w-6 h-6 rounded-lg bg-red-500/15 flex items-center justify-center shrink-0 mt-0.5">
-                  <Check size={14} className="text-red-600 dark:text-red-400" />
+                <div className="w-6 h-6 rounded-lg bg-sky-500/15 flex items-center justify-center shrink-0 mt-0.5">
+                  <Check size={14} className="text-sky-600 dark:text-sky-400" />
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm font-bold text-foreground">
@@ -127,7 +127,7 @@ export const HardwareSpecsGrid = ({ onOpenDataSheet }) => {
             <Button
               variant="outline"
               onClick={() => onOpenDataSheet('door')}
-              className="w-full rounded-xl gap-2 text-red-600 dark:text-red-400 border-red-500/30 hover:bg-red-500/10 text-xs font-bold h-11"
+              className="w-full rounded-xl gap-2 text-sky-600 dark:text-sky-400 border-sky-500/30 hover:bg-sky-500/10 text-xs font-bold h-11"
             >
               <span>View Full Door Pinout & Kinematics Specs</span>
               <ChevronRight size={14} />

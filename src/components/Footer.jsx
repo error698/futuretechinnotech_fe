@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
 import companyData from '../data/company.json';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useRouter } from '../context/RouterContext';
 
 export const Footer = () => {
   const { contact } = companyData.company;
+  const { navigate } = useRouter();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -23,7 +25,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand Col */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center gap-3 mb-4 text-left cursor-pointer bg-transparent border-0 p-0"
+            >
               <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center p-0.5 shadow-sm border border-border shrink-0">
                 <img
                   src="/images/site/ftit-logo-vertical.png"
@@ -32,14 +37,14 @@ export const Footer = () => {
                 />
               </div>
               <span className="font-extrabold text-lg text-foreground font-heading">
-                FUTURETECH <span className="text-red-600 dark:text-red-500">INNOTECH</span>
+                FUTURETECH <span className="text-sky-600 dark:text-sky-400">INNOTECH</span>
               </span>
-            </div>
+            </button>
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-5">
               India's largest & completely integrated design, engineering, and manufacturing solutions under one roof. Established in 2010.
             </p>
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <ShieldCheck size={16} className="text-red-600 dark:text-red-500 shrink-0" />
+              <ShieldCheck size={16} className="text-sky-600 dark:text-sky-400 shrink-0" />
               <span>IATF 16949 & ISO 9001:2015 Registered</span>
             </div>
           </div>
@@ -51,39 +56,53 @@ export const Footer = () => {
             </div>
             <ul className="space-y-2.5 text-xs sm:text-sm text-muted-foreground">
               <li>
-                <a href="#flagship-hardware" className="hover:text-foreground font-semibold text-sky-600 dark:text-sky-400 transition-colors">
-                  ⚡ Flagship Hardware Systems
-                </a>
+                <button
+                  onClick={() => navigate('/flagship')}
+                  className="hover:text-foreground font-semibold text-sky-600 dark:text-sky-400 transition-colors inline-flex items-center gap-1.5 cursor-pointer bg-transparent border-0 p-0 text-left"
+                >
+                  <Zap size={13} className="text-sky-500 shrink-0" />
+                  <span>Flagship Hardware Systems</span>
+                </button>
               </li>
               <li>
-                <a href="#catalog" className="hover:text-foreground transition-colors">
+                <button
+                  onClick={() => navigate('/products')}
+                  className="hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0 text-left text-muted-foreground"
+                >
                   108 Products Catalog
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#vehicles" className="hover:text-foreground transition-colors">
+                <button
+                  onClick={() => navigate('/vehicles')}
+                  className="hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0 text-left text-muted-foreground"
+                >
                   Shop by Vehicle (Hycross, Thar, Nexon)
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#finishes" className="hover:text-foreground transition-colors">
+                <button
+                  onClick={() => navigate('/finishing')}
+                  className="hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0 text-left text-muted-foreground"
+                >
                   Electroplating Finishing Studio
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#pillars" className="hover:text-foreground transition-colors">
+                <button
+                  onClick={() => navigate('/engineering')}
+                  className="hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0 text-left text-muted-foreground"
+                >
                   Design & Manufacturing Facilities
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#advisor" className="hover:text-foreground text-sky-600 dark:text-sky-400 transition-colors">
-                  AI Recommender Engine
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="hover:text-foreground transition-colors">
+                <button
+                  onClick={() => navigate('/contact')}
+                  className="hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0 text-left text-muted-foreground"
+                >
                   Headquarters & Inquiry
-                </a>
+                </button>
               </li>
             </ul>
           </div>

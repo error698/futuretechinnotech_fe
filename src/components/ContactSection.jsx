@@ -50,24 +50,13 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="section bg-secondary/20 transition-colors duration-300">
+    <section id="contact" className="py-2 bg-secondary/20 transition-colors duration-300">
       <div className="container">
-        <div className="section-header">
-          <div className="section-tag">
-            <MapPin size={14} />
-            <span>Headquarters & Facility</span>
-          </div>
-          <h2 className="section-title">Get In Touch With FTIT</h2>
-          <p className="section-subtitle">
-            Reach out to Futuretech Innotech for OEM tie-ups, dealership distribution, precision electroplating, and direct fleet inquiries.
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Contact Information Cards */}
           <div className="flex flex-col gap-4">
             <Card className="p-5 flex items-start gap-4 shadow-sm bg-card hover:border-primary/40 transition-all duration-300">
-              <div className="w-11 h-11 rounded-xl bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-600 dark:text-red-500 shrink-0">
+              <div className="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/25 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
                 <Phone size={20} />
               </div>
               <div>

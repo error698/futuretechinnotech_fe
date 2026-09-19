@@ -4,7 +4,7 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('ftit_theme') || 'dark';
+    return localStorage.getItem('ftit_theme_mode') || 'light';
   });
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export const ThemeProvider = ({ children }) => {
     } else {
       document.documentElement.classList.remove('dark');
     }
-    localStorage.setItem('ftit_theme', theme);
+    localStorage.setItem('ftit_theme_mode', theme);
   }, [theme]);
 
   const toggleTheme = () => {

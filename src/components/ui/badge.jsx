@@ -15,9 +15,11 @@ const badgeVariants = cva(
           'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
         outline: 'text-foreground border-border',
         red:
-          'border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400 font-bold',
+          'border-sky-500/30 bg-sky-500/10 text-sky-600 dark:text-sky-400 font-semibold',
+        sky:
+          'border-sky-500/30 bg-sky-500/10 text-sky-600 dark:text-sky-400 font-semibold',
         cyan:
-          'border-cyan-500/30 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold',
+          'border-cyan-500/30 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-semibold',
         success:
           'border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold',
       },

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRFQ } from '../context/RFQContext';
-import { Sparkles, Plus, Check } from 'lucide-react';
+import { Sparkles, Eye } from 'lucide-react';
 import productsData from '../data/products.json';
 import { API_ENDPOINTS } from '../config/api';
 import { Card } from '@/components/ui/card';
@@ -8,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
 export const AIAdvisor = ({ onSelectProduct }) => {
-  const { addToRFQ, rfqItems } = useRFQ();
   const [selectedCar, setSelectedCar] = useState('Toyota Hycross');
   const [selectedPriority, setSelectedPriority] = useState('all');
   const [recommendations, setRecommendations] = useState([]);
@@ -127,7 +125,6 @@ export const AIAdvisor = ({ onSelectProduct }) => {
           {/* Recommended Products Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {recommendations.map((item) => {
-              const inCart = rfqItems.some((it) => it.id === item.id);
               return (
                 <Card
                   key={item.id}
@@ -152,19 +149,15 @@ export const AIAdvisor = ({ onSelectProduct }) => {
 
                   <Button
                     size="sm"
-                    variant={inCart ? 'secondary' : 'default'}
+                    variant="secondary"
                     onClick={(e) => {
                       e.stopPropagation();
-                      addToRFQ(item, 1);
+                      onSelectProduct(item);
                     }}
-                    className={`w-full rounded-xl gap-1.5 h-9 font-semibold text-xs ${
-                      inCart
-                        ? 'border-sky-500/40 text-sky-600 dark:text-sky-400'
-                        : 'bg-sky-600 hover:bg-sky-500 text-white'
-                    }`}
+                    className="w-full rounded-xl gap-1.5 h-9 font-semibold text-xs border border-border/80 hover:border-primary/40 hover:text-primary transition-colors cursor-pointer"
                   >
-                    {inCart ? <Check size={14} /> : <Plus size={14} />}
-                    <span>{inCart ? 'In RFQ' : 'Add to RFQ'}</span>
+                    <Eye size={14} />
+                    <span>View Specifications</span>
                   </Button>
                 </Card>
               );

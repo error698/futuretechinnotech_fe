@@ -15,7 +15,7 @@ export const StatsSection = () => {
           {/* Left Column: Story & Quality */}
           <div>
             <div className="inline-flex mb-4">
-              <Badge variant="red" className="gap-2 py-1 px-3 text-xs uppercase tracking-wider font-bold">
+              <Badge variant="sky" className="gap-2 py-1 px-3 text-xs uppercase tracking-wider font-semibold">
                 <Award size={14} />
                 <span>Established {established} • New Delhi</span>
               </Badge>
@@ -40,14 +40,14 @@ export const StatsSection = () => {
                 'Zero-defect Poka-Yoke Assembly'
               ].map((cert) => (
                 <div key={cert} className="flex items-center gap-2.5 text-xs sm:text-sm text-foreground">
-                  <CheckCircle2 size={16} className="text-red-600 dark:text-red-500 shrink-0" />
+                  <CheckCircle2 size={16} className="text-sky-600 dark:text-sky-400 shrink-0" />
                   <span>{cert}</span>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg" className="rounded-full">
+              <Button asChild size="lg" className="rounded-full shadow-md">
                 <a href="#contact">Partner With FTIT</a>
               </Button>
               <Button asChild variant="outline" size="lg" className="rounded-full">
@@ -59,7 +59,7 @@ export const StatsSection = () => {
           {/* Right Column: 4 Stat Cards */}
           <div className="grid grid-cols-2 gap-4">
             <Card className="p-8 text-center bg-card shadow-md hover:-translate-y-1 transition-all duration-300">
-              <Factory size={28} className="text-red-600 dark:text-red-500 mx-auto mb-3" />
+              <Factory size={28} className="text-sky-600 dark:text-sky-400 mx-auto mb-3" />
               <div className="text-3xl sm:text-4xl font-black text-foreground font-heading leading-none">10+</div>
               <div className="text-xs text-muted-foreground mt-2 font-medium">Years of Excellence</div>
             </Card>

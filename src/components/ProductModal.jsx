@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useRFQ } from '../context/RFQContext';
-import { Plus, Minus, ShieldCheck, Check } from 'lucide-react';
+import { useRouter } from '../context/RouterContext';
+import { Mail, ShieldCheck } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -14,25 +14,10 @@ import { Button } from '@/components/ui/button';
 export const ProductModal = ({ product, onClose }) => {
   if (!product) return null;
 
-  const { addToRFQ, rfqItems, setIsModalOpen } = useRFQ();
-  const [quantity, setQuantity] = useState(1);
+  const { navigate } = useRouter();
   const [selectedFinish, setSelectedFinish] = useState(
     product.finishes && product.finishes.length > 0 ? product.finishes[0] : 'OEM Standard'
   );
-
-  const inCart = rfqItems.some((it) => it.id === product.id);
-
-  const handleAdd = () => {
-    addToRFQ(
-      {
-        ...product,
-        name: `${product.name} (${selectedFinish})`,
-      },
-      quantity
-    );
-    onClose();
-    setIsModalOpen(true);
-  };
 
   return (
     <Dialog open={!!product} onOpenChange={(open) => !open && onClose()}>
@@ -128,31 +113,24 @@ export const ProductModal = ({ product, onClose }) => {
               </div>
             </div>
 
-            {/* Quantity & CTA */}
+            {/* Action Buttons */}
             <div className="flex items-center gap-3 pt-2">
-              <div className="flex items-center bg-muted/60 rounded-full border border-border/80 p-1">
-                <button
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-foreground hover:bg-background transition-colors"
-                  aria-label="Decrease quantity"
-                >
-                  <Minus size={13} />
-                </button>
-                <span className="w-8 text-center font-bold text-sm text-foreground">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity((q) => q + 1)}
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-foreground hover:bg-background transition-colors"
-                  aria-label="Increase quantity"
-                >
-                  <Plus size={13} />
-                </button>
-              </div>
-
-              <Button onClick={handleAdd} className="flex-1 rounded-full gap-2">
-                <Plus size={16} />
-                <span>Add to RFQ Quotation</span>
+              <Button
+                onClick={() => {
+                  onClose();
+                  navigate('/contact');
+                }}
+                className="flex-1 rounded-full gap-2 cursor-pointer"
+              >
+                <Mail size={16} />
+                <span>Inquire About This Part</span>
+              </Button>
+              <Button
+                variant="outline"
+                onClick={onClose}
+                className="rounded-full px-5 cursor-pointer"
+              >
+                Close
               </Button>
             </div>
           </div>

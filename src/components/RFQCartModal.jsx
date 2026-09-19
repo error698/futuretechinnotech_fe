@@ -161,7 +161,7 @@ export const RFQCartModal = () => {
               </h3>
               <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
                 Your RFQ Reference:{' '}
-                <b className="text-red-600 dark:text-red-400 font-mono text-base">{submitSuccess}</b>. Our engineering team at Shivaji Vihar, New Delhi will get in touch with technical drawings and pricing within 24 hours.
+                <b className="text-sky-600 dark:text-sky-400 font-mono text-base">{submitSuccess}</b>. Our engineering team at Shivaji Vihar, New Delhi will get in touch with technical drawings and pricing within 24 hours.
               </p>
               <Button
                 variant="outline"

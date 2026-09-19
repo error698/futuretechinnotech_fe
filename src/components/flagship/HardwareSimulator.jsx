@@ -79,7 +79,7 @@ export const HardwareSimulator = ({ onRequestQuote }) => {
       {/* Background ambient lighting */}
       <div
         className={`absolute -top-28 -right-28 w-96 h-96 rounded-full blur-[90px] pointer-events-none transition-all duration-700 ${
-          activeTab === 'glass' ? 'bg-sky-500/15' : 'bg-red-500/15'
+          activeTab === 'glass' ? 'bg-sky-500/15' : 'bg-cyan-500/15'
         }`}
       />
 

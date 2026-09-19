@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useRFQ } from '../context/RFQContext';
-import { Search, Plus, Eye, Check, Layers, Car } from 'lucide-react';
+import { Search, Eye, Car, Layers } from 'lucide-react';
 import productsData from '../data/products.json';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -8,12 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 export const ProductCatalog = ({ onSelectProduct }) => {
-  const { addToRFQ, rfqItems, selectedVehicle, setSelectedVehicle } = useRFQ();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedVehicle, setSelectedVehicle] = useState('All Vehicles');
   const [currentPage, setCurrentPage] = useState(1);
-  const [addedNotice, setAddedNotice] = useState(null);
-  const pageSize = 12;
+  const pageSize = 24;
 
   const categories = useMemo(() => {
     const cats = ['All', ...new Set(productsData.map((p) => p.category))];
@@ -53,33 +51,14 @@ export const ProductCatalog = ({ onSelectProduct }) => {
     return filteredProducts.slice(start, start + pageSize);
   }, [filteredProducts, currentPage]);
 
-  const handleAddRFQ = (product, e) => {
-    e.stopPropagation();
-    addToRFQ(product, 1);
-    setAddedNotice(product.id);
-    setTimeout(() => setAddedNotice(null), 1500);
-  };
-
   return (
-    <section id="catalog" className="section bg-secondary/30 transition-colors duration-300">
+    <section id="catalog" className="transition-colors duration-300">
       <div className="container">
-        {/* Header */}
-        <div className="section-header">
-          <div className="section-tag">
-            <Layers size={14} />
-            <span>Complete OEM & Aftermarket Catalog</span>
-          </div>
-          <h2 className="section-title">108 Precision Engineered Components</h2>
-          <p className="section-subtitle">
-            Every product is manufactured using high-spec polymers, CNC stainless steel, and certified electroplated coatings under FTIT's integrated production facility.
-          </p>
-        </div>
-
         {/* Search & Filter Controls */}
         <div className="flex flex-col gap-4 mb-8">
-          <div className="flex flex-wrap gap-3 justify-between items-center">
+          <div className="flex flex-wrap gap-4 justify-between items-center">
             {/* Search Input */}
-            <div className="relative flex-1 min-w-[280px] max-w-md">
+            <div className="relative flex-1 min-w-[280px] max-w-xl">
               <Search
                 size={18}
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
@@ -93,33 +72,45 @@ export const ProductCatalog = ({ onSelectProduct }) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="pl-11 rounded-full bg-background"
+                className="pl-11 pr-4 h-11 bg-card rounded-xl border-border/80 focus:border-primary text-sm shadow-sm w-full"
               />
             </div>
 
-            {/* Active Filters Pill */}
-            <div className="flex items-center gap-2 flex-wrap">
+            {/* Active Filters Pill & Parts Count */}
+            <div className="flex items-center gap-2.5 flex-wrap">
               {selectedVehicle !== 'All Vehicles' && (
-                <Badge variant="red" className="gap-1.5 py-1 px-3">
+                <Badge variant="sky" className="gap-1.5 py-1 px-3">
                   <Car size={13} />
                   <span>{selectedVehicle}</span>
                   <button
                     onClick={() => setSelectedVehicle('All Vehicles')}
-                    className="ml-1 hover:text-white font-extrabold"
+                    className="ml-1 hover:text-sky-900 dark:hover:text-white font-extrabold cursor-pointer"
                     aria-label="Clear vehicle filter"
                   >
                     ×
                   </button>
                 </Badge>
               )}
-              <span className="text-xs text-muted-foreground font-medium">
+              {selectedCategory !== 'All' && (
+                <Badge variant="outline" className="gap-1.5 py-1 px-3">
+                  <span>Category: {selectedCategory}</span>
+                  <button
+                    onClick={() => setSelectedCategory('All')}
+                    className="ml-1 hover:text-foreground font-extrabold cursor-pointer"
+                    aria-label="Clear category filter"
+                  >
+                    ×
+                  </button>
+                </Badge>
+              )}
+              <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
                 Showing <b className="text-foreground">{filteredProducts.length}</b> parts
               </span>
             </div>
           </div>
 
-          {/* Category Tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {/* Category Tabs - Wraps gracefully across wide screens */}
+          <div className="flex flex-wrap gap-2 pt-1">
             {categories.map((cat) => {
               const isSelected = selectedCategory === cat;
               return (
@@ -140,18 +131,15 @@ export const ProductCatalog = ({ onSelectProduct }) => {
           </div>
         </div>
 
-        {/* Product Grid */}
+        {/* Product Grid - Automatically scales up to 5 and 6 columns on large / zoomed-out displays */}
         {paginatedProducts.length === 0 ? (
           <div className="text-center py-16 px-4 rounded-2xl bg-card border border-dashed border-border/80">
             <p className="text-lg text-foreground font-bold mb-2">No matching products found</p>
             <p className="text-sm text-muted-foreground">Try adjusting your search query or vehicle filter.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 min-[1900px]:grid-cols-6 gap-5 sm:gap-6">
             {paginatedProducts.map((product) => {
-              const inCart = rfqItems.some((it) => it.id === product.id);
-              const isJustAdded = addedNotice === product.id;
-
               return (
                 <Card
                   key={product.id}
@@ -205,47 +193,19 @@ export const ProductCatalog = ({ onSelectProduct }) => {
                         <b className="text-foreground">Material:</b> {product.material}
                       </div>
 
-                      {/* Card Actions */}
-                      <div className="flex gap-2">
+                      {/* Card Action */}
+                      <div>
                         <Button
-                          onClick={(e) => handleAddRFQ(product, e)}
-                          variant={isJustAdded ? 'default' : inCart ? 'secondary' : 'default'}
+                          variant="secondary"
                           size="sm"
-                          className={`flex-1 rounded-lg gap-1.5 h-9 font-semibold text-xs ${
-                            isJustAdded
-                              ? 'bg-emerald-600 hover:bg-emerald-600 text-white'
-                              : inCart
-                              ? 'border-primary/40 text-primary'
-                              : ''
-                          }`}
-                        >
-                          {isJustAdded ? (
-                            <>
-                              <Check size={14} /> Added
-                            </>
-                          ) : inCart ? (
-                            <>
-                              <Check size={14} /> In RFQ
-                            </>
-                          ) : (
-                            <>
-                              <Plus size={14} /> Add to RFQ
-                            </>
-                          )}
-                        </Button>
-
-                        <Button
-                          variant="outline"
-                          size="icon"
                           onClick={(e) => {
                             e.stopPropagation();
                             onSelectProduct(product);
                           }}
-                          className="h-9 w-9 rounded-lg shrink-0"
-                          title="View Specifications"
-                          aria-label="View specifications"
+                          className="w-full rounded-xl gap-2 h-9 font-semibold text-xs border border-border/80 hover:border-primary/40 hover:text-primary transition-colors cursor-pointer"
                         >
-                          <Eye size={15} />
+                          <Eye size={14} />
+                          <span>View Specifications</span>
                         </Button>
                       </div>
                     </div>

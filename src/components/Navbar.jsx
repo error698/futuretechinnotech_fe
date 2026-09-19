@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useRFQ } from '../context/RFQContext';
 import { useTheme } from '../context/ThemeContext';
-import { ShoppingBag, Menu, Car, Sparkles, Zap, Sun, Moon } from 'lucide-react';
+import { Menu, Car, Sparkles, Zap, Sun, Moon, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -12,9 +11,11 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 
+import { useRouter } from '../context/RouterContext';
+
 export const Navbar = () => {
-  const { totalItemsCount, setIsModalOpen, selectedVehicle } = useRFQ();
   const { theme, toggleTheme, isDark } = useTheme();
+  const { currentPath, navigate } = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -26,18 +27,35 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navItems = [
+    { label: 'Flagship Hardware', path: '/flagship', icon: Zap },
+    { label: 'Products', path: '/products' },
+    { label: 'Shop by Car', path: '/vehicles' },
+    { label: 'Finishing Studio', path: '/finishing' },
+    { label: 'Engineering', path: '/engineering' },
+    { label: 'About FTIT', path: '/about' },
+  ];
+
+  const handleNavClick = (path) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         scrolled
-          ? 'bg-background/90 backdrop-blur-md border-b border-border/80 py-3.5 shadow-sm'
+          ? 'bg-white/75 dark:bg-slate-950/75 backdrop-blur-xl border-b border-white/60 dark:border-white/10 py-3.5 shadow-[0_4px_24px_rgba(0,0,0,0.04)]'
           : 'bg-transparent py-5 border-b border-transparent'
       }`}
     >
       <div className="container flex items-center justify-between gap-4 w-full">
-        {/* Brand Logo with Official Company Emblem */}
-        <a href="#" className="flex items-center gap-3 no-underline shrink-0 group">
-          <div className="w-[42px] h-[42px] rounded-xl bg-white flex items-center justify-center p-0.5 shrink-0 shadow-md border border-border/80 transition-transform duration-300 group-hover:scale-105">
+        {/* Brand Logo with Official Company Emblem - Navigates to Home */}
+        <button
+          onClick={() => handleNavClick('/')}
+          className="flex items-center gap-3 no-underline shrink-0 group text-left cursor-pointer bg-transparent border-0 p-0"
+        >
+          <div className="w-[42px] h-[42px] rounded-xl bg-white/90 backdrop-blur-md flex items-center justify-center p-1 shrink-0 shadow-md border border-white/80 dark:border-white/20 transition-transform duration-300 group-hover:scale-105">
             <img
               src="/images/site/ftit-logo-vertical.png"
               alt="Futuretech Innotech Logo"
@@ -46,60 +64,48 @@ export const Navbar = () => {
           </div>
           <div className="whitespace-nowrap shrink-0">
             <div className="font-extrabold text-[17px] tracking-tight leading-tight text-foreground font-heading whitespace-nowrap">
-              FUTURETECH <span className="text-red-600 dark:text-red-500">INNOTECH</span>
+              FUTURETECH <span className="text-sky-600 dark:text-sky-400">INNOTECH</span>
             </div>
             <div className="text-[9.5px] text-muted-foreground tracking-widest uppercase font-semibold mt-0.5 whitespace-nowrap">
               Precision Auto Solutions
             </div>
           </div>
-        </a>
+        </button>
 
-        {/* Spacious Desktop Nav - Single Line Guaranteed */}
+        {/* Spacious Desktop Nav - Dedicated Page Routing */}
         <nav className="desktop-nav">
-          <a
-            href="#flagship-hardware"
-            className="nav-link text-cyan-600 dark:text-cyan-400 font-bold"
-          >
-            <Zap size={14} className="shrink-0" /> Flagship Hardware
-          </a>
-          <a href="#catalog" className="nav-link">
-            Products
-          </a>
-          <a href="#vehicles" className="nav-link">
-            Shop by Car
-          </a>
-          <a href="#finishes" className="nav-link">
-            Finishing Studio
-          </a>
-          <a href="#pillars" className="nav-link">
-            Engineering
-          </a>
-          <a
-            href="#advisor"
-            className="nav-link text-cyan-600 dark:text-cyan-400 font-semibold"
-          >
-            <Sparkles size={14} className="shrink-0" /> AI Recommender
-          </a>
-          <a href="#about" className="nav-link">
-            About FTIT
-          </a>
-          <a href="#contact" className="nav-link">
-            Contact
-          </a>
+          {navItems.map((item) => {
+            const isActive = currentPath === item.path;
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.path}
+                onClick={() => handleNavClick(item.path)}
+                className={`nav-link cursor-pointer relative py-2 px-1 transition-all text-xs font-medium flex items-center gap-1.5 ${
+                  isActive
+                    ? 'text-sky-600 dark:text-sky-400 font-bold'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {Icon && (
+                  <Icon
+                    size={13}
+                    className={`shrink-0 transition-colors ${
+                      isActive ? 'text-sky-600 dark:text-sky-400' : 'text-muted-foreground'
+                    }`}
+                  />
+                )}
+                <span>{item.label}</span>
+                {isActive && (
+                  <span className="absolute -bottom-1 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-500 via-cyan-400 to-sky-500 rounded-full shadow-[0_0_8px_rgba(14,165,233,0.7)]" />
+                )}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2.5 shrink-0 whitespace-nowrap">
-          {/* Active Vehicle pill if selected (wide screens) */}
-          {selectedVehicle && selectedVehicle !== 'All Vehicles' && (
-            <a href="#vehicles" className="vehicle-indicator">
-              <Badge variant="red" className="gap-1.5 py-1 px-3 text-xs font-semibold cursor-pointer">
-                <Car size={13} />
-                <span>{selectedVehicle}</span>
-              </Badge>
-            </a>
-          )}
-
           {/* Light / Dark Mode Toggle */}
           <Button
             variant="outline"
@@ -116,20 +122,17 @@ export const Navbar = () => {
             )}
           </Button>
 
-          {/* RFQ Basket Button */}
+          {/* Contact Inquiry CTA Button - Navigates to /contact */}
           <Button
-            id="rfq-cart-btn"
-            onClick={() => setIsModalOpen(true)}
-            variant={totalItemsCount > 0 ? 'default' : 'secondary'}
-            className="gap-2 rounded-full h-10 px-4 font-semibold text-[13.5px]"
+            onClick={() => handleNavClick('/contact')}
+            variant="default"
+            className={`rounded-full h-10 px-5 font-semibold text-xs gap-1.5 hidden sm:inline-flex cursor-pointer transition-all shadow-sm ${
+              currentPath === '/contact'
+                ? 'ring-2 ring-primary ring-offset-2 ring-offset-background shadow-md'
+                : 'hover:opacity-95'
+            }`}
           >
-            <ShoppingBag size={16} />
-            <span>RFQ Quote</span>
-            {totalItemsCount > 0 && (
-              <span className="bg-white text-red-600 w-[18px] h-[18px] rounded-full inline-flex items-center justify-center text-[10.5px] font-extrabold shadow-sm">
-                {totalItemsCount}
-              </span>
-            )}
+            <span>Contact Us</span>
           </Button>
 
           {/* Mobile Sheet Navigation */}
@@ -155,63 +158,44 @@ export const Navbar = () => {
                     </SheetTitle>
                   </SheetHeader>
 
-                  <div className="flex flex-col gap-3.5 text-base">
-                    <a
-                      href="#flagship-hardware"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-2 font-bold text-cyan-600 dark:text-cyan-400 py-2 border-b border-border/50"
+                  <div className="flex flex-col gap-1.5 text-base">
+                    {navItems.map((item) => {
+                      const isActive = currentPath === item.path;
+                      const Icon = item.icon;
+                      return (
+                        <button
+                          key={item.path}
+                          onClick={() => handleNavClick(item.path)}
+                          className={`flex items-center justify-between text-left py-2.5 px-3 rounded-xl transition-colors font-semibold border ${
+                            isActive
+                              ? 'bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold border-sky-500/30'
+                              : 'text-foreground hover:bg-muted/60 border-transparent'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            {Icon && <Icon size={17} className="text-sky-500 shrink-0" />}
+                            <span>{item.label}</span>
+                          </div>
+                          {isActive && (
+                            <span className="w-2 h-2 rounded-full bg-sky-500" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Mobile Contact Us Action */}
+                  <div className="pt-4 mt-2">
+                    <Button
+                      onClick={() => handleNavClick('/contact')}
+                      variant="default"
+                      className={`w-full rounded-xl h-11 font-semibold text-sm gap-2 cursor-pointer ${
+                        currentPath === '/contact' ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''
+                      }`}
                     >
-                      <Zap size={18} /> Flagship Hardware Systems
-                    </a>
-                    <a
-                      href="#catalog"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-semibold text-foreground py-2 border-b border-border/50"
-                    >
-                      Products Catalog (108+)
-                    </a>
-                    <a
-                      href="#vehicles"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-semibold text-foreground py-2 border-b border-border/50"
-                    >
-                      Shop by Vehicle Platform
-                    </a>
-                    <a
-                      href="#finishes"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-semibold text-foreground py-2 border-b border-border/50"
-                    >
-                      Finishing Studio & Coatings
-                    </a>
-                    <a
-                      href="#pillars"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-semibold text-foreground py-2 border-b border-border/50"
-                    >
-                      Engineering & Manufacturing
-                    </a>
-                    <a
-                      href="#advisor"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center gap-2 font-semibold text-cyan-600 dark:text-cyan-400 py-2 border-b border-border/50"
-                    >
-                      <Sparkles size={16} /> AI Recommender (Python)
-                    </a>
-                    <a
-                      href="#about"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-semibold text-foreground py-2 border-b border-border/50"
-                    >
-                      About FTIT
-                    </a>
-                    <a
-                      href="#contact"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="font-semibold text-foreground py-2 border-b border-border/50"
-                    >
-                      Contact & Location
-                    </a>
+                      <Mail size={16} />
+                      <span>Contact Us</span>
+                    </Button>
                   </div>
                 </div>
 

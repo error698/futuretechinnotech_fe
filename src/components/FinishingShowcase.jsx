@@ -9,19 +9,8 @@ export const FinishingShowcase = () => {
   const [activeFinish, setActiveFinish] = useState(finishes[0]);
 
   return (
-    <section id="finishes" className="section relative">
+    <section id="finishes" className="py-2 relative">
       <div className="container">
-        <div className="section-header">
-          <div className="section-tag">
-            <Sparkles size={14} />
-            <span>Proprietary Electroplating & Coatings</span>
-          </div>
-          <h2 className="section-title">Surface Finishing Studio</h2>
-          <p className="section-subtitle">
-            FTIT houses an in-house automated electroplating and cleanroom coating facility, producing mirror chromes, titanium blacks, and satin luxury finishes that meet international automotive OEM salt-spray and weathering specs.
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Interactive Finishes Selector */}
           <div className="flex flex-col gap-3">

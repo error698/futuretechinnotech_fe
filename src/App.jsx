@@ -1,57 +1,95 @@
 import React, { useState } from 'react';
+import { SplashScreen } from './components/splash';
 import { ThemeProvider } from './context/ThemeContext';
-import { RFQProvider } from './context/RFQContext';
+import { RouterProvider, useRouter } from './context/RouterContext';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { FlagshipShowcase } from './components/flagship/FlagshipShowcase';
-import { VehicleSelector } from './components/VehicleSelector';
-import { ProductCatalog } from './components/ProductCatalog';
-import { FinishingShowcase } from './components/FinishingShowcase';
-import { ManufacturingPillars } from './components/ManufacturingPillars';
-import { AIAdvisor } from './components/AIAdvisor';
-import { StatsSection } from './components/StatsSection';
-import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ProductModal } from './components/ProductModal';
-import { RFQCartModal } from './components/RFQCartModal';
+
+// Dedicated Page Components
+import {
+  HomePage,
+  FlagshipPage,
+  ProductsPage,
+  VehiclesPage,
+  FinishingPage,
+  EngineeringPage,
+  AboutPage,
+  ContactPage,
+} from './pages';
+
+const AppContent = () => {
+  const { currentPath } = useRouter();
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  // Route resolver for dedicated pages
+  const renderCurrentPage = () => {
+    switch (currentPath) {
+      case '/flagship':
+        return <FlagshipPage />;
+      case '/products':
+        return <ProductsPage onSelectProduct={setSelectedProduct} />;
+      case '/vehicles':
+        return <VehiclesPage onSelectProduct={setSelectedProduct} />;
+      case '/finishing':
+        return <FinishingPage />;
+      case '/engineering':
+        return <EngineeringPage />;
+      case '/about':
+        return <AboutPage />;
+      case '/contact':
+        return <ContactPage />;
+      case '/':
+      default:
+        return <HomePage />;
+    }
+  };
+
+  return (
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: 'var(--bg-primary)',
+        color: 'var(--text-primary)',
+        transition: 'background-color 0.3s ease, color 0.3s ease',
+      }}
+    >
+      {/* Global Navigation Header */}
+      <Navbar />
+
+      {/* Dedicated Page View */}
+      <main style={{ flex: 1 }}>
+        {renderCurrentPage()}
+      </main>
+
+      {/* Global Footer */}
+      <Footer />
+
+      {/* Modals & Overlays */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </div>
+  );
+};
 
 export const App = () => {
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [splashFinished, setSplashFinished] = useState(false);
 
   return (
     <ThemeProvider>
-      <RFQProvider>
-        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', transition: 'background-color 0.3s ease, color 0.3s ease' }}>
-          {/* Navigation Bar */}
-          <Navbar />
-
-        {/* Main Content Sections */}
-        <main style={{ flex: 1 }}>
-          <Hero />
-          <FlagshipShowcase />
-          <VehicleSelector />
-          <ProductCatalog onSelectProduct={(p) => setSelectedProduct(p)} />
-          <FinishingShowcase />
-          <ManufacturingPillars />
-          <AIAdvisor onSelectProduct={(p) => setSelectedProduct(p)} />
-          <StatsSection />
-          <ContactSection />
-        </main>
-
-        {/* Global Footer */}
-        <Footer />
-
-        {/* Modals & Overlays */}
-        {selectedProduct && (
-          <ProductModal
-            product={selectedProduct}
-            onClose={() => setSelectedProduct(null)}
-          />
+      <RouterProvider>
+        {!splashFinished && (
+          <SplashScreen onComplete={() => setSplashFinished(true)} />
         )}
-        <RFQCartModal />
-      </div>
-    </RFQProvider>
-  </ThemeProvider>
+        <AppContent />
+      </RouterProvider>
+    </ThemeProvider>
   );
 };
 

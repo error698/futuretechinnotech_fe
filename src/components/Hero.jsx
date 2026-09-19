@@ -1,25 +1,25 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, ChevronRight } from 'lucide-react';
-import { useRFQ } from '../context/RFQContext';
+import { useRouter } from '../context/RouterContext';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 
 export const Hero = () => {
-  const { setIsModalOpen } = useRFQ();
+  const { navigate } = useRouter();
 
   return (
     <section className="relative pt-14 pb-20 overflow-hidden">
-      {/* Ambient background glow */}
+      {/* Ambient background glow - Calm Ocean Sky */}
       <div
-        className="absolute -top-36 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-red-600/15 blur-[90px] rounded-full pointer-events-none -z-10 dark:bg-red-600/10"
+        className="absolute -top-36 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-sky-500/12 blur-[100px] rounded-full pointer-events-none -z-10 dark:bg-sky-500/10"
       />
 
       <div className="container">
         <div className="max-w-[880px] mx-auto text-center">
           {/* IATF Badge */}
           <div className="inline-flex mb-6">
-            <Badge variant="red" className="gap-2 py-1.5 px-4 text-xs tracking-wider uppercase font-bold rounded-full">
+            <Badge variant="sky" className="gap-2 py-1.5 px-4 text-xs tracking-wider uppercase font-semibold rounded-full">
               <ShieldCheck size={15} />
               <span>IATF 16949 & ISO 9001 CERTIFIED MANUFACTURING</span>
             </Badge>
@@ -37,28 +37,33 @@ export const Hero = () => {
 
           {/* Action CTAs */}
           <div className="flex flex-wrap items-center justify-center gap-4 mb-14">
-            <Button asChild size="lg" className="rounded-full shadow-lg gap-2">
-              <a href="#catalog" id="hero-explore-btn">
-                <span>Explore 108+ Products</span>
-                <ArrowRight size={17} />
-              </a>
+            <Button
+              size="lg"
+              onClick={() => navigate('/products')}
+              className="rounded-full shadow-lg gap-2 cursor-pointer"
+            >
+              <span>Explore 108+ Products</span>
+              <ArrowRight size={17} />
             </Button>
 
             <Button
               variant="secondary"
               size="lg"
-              onClick={() => setIsModalOpen(true)}
-              id="hero-rfq-btn"
-              className="rounded-full"
+              onClick={() => navigate('/contact')}
+              id="hero-contact-btn"
+              className="rounded-full cursor-pointer"
             >
-              <span>Request Custom RFQ</span>
+              <span>Contact Headquarters</span>
             </Button>
 
-            <Button asChild variant="outline" size="lg" className="rounded-full gap-1.5">
-              <a href="#vehicles">
-                <span>Filter by Car Model</span>
-                <ChevronRight size={15} />
-              </a>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => navigate('/vehicles')}
+              className="rounded-full gap-1.5 cursor-pointer"
+            >
+              <span>Filter by Car Model</span>
+              <ChevronRight size={15} />
             </Button>
           </div>
 
@@ -69,7 +74,7 @@ export const Hero = () => {
               <div className="text-xs text-muted-foreground font-medium">Years of Excellence</div>
             </div>
             <div className="text-center md:text-left md:border-l md:border-border/70 md:pl-5">
-              <div className="text-3xl font-extrabold text-red-600 dark:text-red-500 font-heading">$1.8M+</div>
+              <div className="text-3xl font-extrabold text-sky-600 dark:text-sky-400 font-heading">$1.8M+</div>
               <div className="text-xs text-muted-foreground font-medium">Revenue till 2025</div>
             </div>
             <div className="text-center md:text-left md:border-l md:border-border/70 md:pl-5">

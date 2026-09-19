@@ -1,91 +1,59 @@
 import React from 'react';
-import { useRFQ } from '../context/RFQContext';
-import { Car, CheckCircle2 } from 'lucide-react';
 import companyData from '../data/company.json';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 export const VehicleSelector = () => {
-  const { selectedVehicle, setSelectedVehicle } = useRFQ();
   const cars = companyData.company.featuredCars;
 
   return (
-    <section id="vehicles" className="section pt-10 pb-16">
+    <section id="vehicles" className="py-2">
       <div className="container">
-        <div className="section-header">
-          <div className="section-tag">
-            <Car size={14} />
-            <span>OEM Model Compatibility</span>
-          </div>
-          <h2 className="section-title">Shop by Vehicle Platform</h2>
-          <p className="section-subtitle">
-            Direct-fit OEM engineered components tailored specifically for India's bestselling automobile platforms with zero body modification required.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* Universal Fit Option */}
-          <Card
-            onClick={() => setSelectedVehicle('All Vehicles')}
-            className={`p-6 cursor-pointer text-center relative transition-all duration-300 hover:-translate-y-1 ${
-              selectedVehicle === 'All Vehicles'
-                ? 'border-2 border-primary bg-primary/10 shadow-md ring-1 ring-primary/30'
-                : 'hover:border-primary/40 bg-card'
-            }`}
-          >
-            <div className="text-4xl mb-3">🚗</div>
-            <div className="font-extrabold text-lg text-foreground font-heading mb-1">
-              All Vehicles
-            </div>
-            <div className="text-xs text-muted-foreground">108 Products Catalog</div>
-            {selectedVehicle === 'All Vehicles' && (
-              <div className="absolute top-3 right-3 text-primary">
-                <CheckCircle2 size={18} />
-              </div>
-            )}
-          </Card>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
           {cars.map((car, index) => {
-            const isSelected = selectedVehicle === car.name;
-            return (
-              <Card
-                key={car.id}
-                onClick={() => setSelectedVehicle(car.name)}
-                className={`p-6 cursor-pointer relative transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between ${
-                  isSelected
-                    ? 'border-2 border-primary bg-primary/10 shadow-md ring-1 ring-primary/30'
-                    : 'hover:border-primary/40 bg-card'
-                }`}
-              >
-                <div>
-                  <div className="flex justify-between items-start mb-3.5">
-                    <span
-                      className={`text-xs font-bold tracking-wider ${
-                        isSelected ? 'text-primary' : 'text-muted-foreground'
-                      }`}
-                    >
-                      0{index + 1}
-                    </span>
-                    <Badge variant="red">{car.badge}</Badge>
-                  </div>
+            const carNumber = car.num || `0${index + 1}`;
 
-                  <div className="font-extrabold text-lg text-foreground font-heading mb-1">
-                    {car.name}
-                  </div>
-                  <div className="text-xs text-muted-foreground mb-4">
+            return (
+              <div
+                key={car.id}
+                className="group relative min-h-[320px] sm:min-h-[360px] rounded-2xl overflow-hidden p-5 flex flex-col justify-between transition-all duration-300 border border-slate-800/80 shadow-lg"
+              >
+                {/* Full-bleed Car Image Background */}
+                <img
+                  src={car.image}
+                  alt={car.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+
+                {/* Dark Vignette & Gradient Overlay for readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-slate-950/20" />
+
+                {/* Top Badge & Number Row */}
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-white/90 border border-white/15">
+                    {carNumber}
+                  </span>
+                  <span className="text-[10.5px] font-bold px-2 py-0.5 rounded-md bg-white/15 backdrop-blur-md text-white border border-white/20">
+                    {car.badge}
+                  </span>
+                </div>
+
+                {/* Bottom Car Details */}
+                <div className="relative z-10 pt-8">
+                  <div className="text-[11px] text-sky-400 font-semibold uppercase tracking-wider mb-1">
                     {car.tag}
                   </div>
-                </div>
+                  <h3 className="text-lg sm:text-xl font-black text-white font-heading tracking-tight mb-2 leading-tight drop-shadow-md">
+                    {car.name}
+                  </h3>
 
-                <div
-                  className={`flex items-center justify-between pt-3 border-t border-border/70 text-xs font-semibold ${
-                    isSelected ? 'text-primary' : 'text-muted-foreground'
-                  }`}
-                >
-                  <span>{car.compatibleCount}+ Custom Fits</span>
-                  {isSelected && <CheckCircle2 size={16} />}
+                  <div className="flex items-center justify-between pt-2.5 border-t border-white/20 text-xs text-slate-200">
+                    <span className="font-medium">Direct Fitments</span>
+                    <span className="font-mono font-bold text-sky-300">
+                      {car.compatibleCount}+ Custom Fits
+                    </span>
+                  </div>
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>
