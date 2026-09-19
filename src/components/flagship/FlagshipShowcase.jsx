@@ -3,7 +3,6 @@ import {
   Sparkles, 
   ShieldCheck, 
   Cpu, 
-  ArrowRight, 
   FileText, 
   Zap, 
   Eye, 
@@ -11,7 +10,6 @@ import {
 import { HardwareSimulator } from './HardwareSimulator';
 import { HardwareSpecsGrid } from './HardwareSpecsGrid';
 import { SystemArchitectureDiagram } from './SystemArchitectureDiagram';
-import { EngineeringLeadForm } from './EngineeringLeadForm';
 import { TechDataSheetModal } from './TechDataSheetModal';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -23,13 +21,6 @@ export const FlagshipShowcase = () => {
   const handleOpenDataSheet = (subsystem = 'door') => {
     setSelectedSubsystem(subsystem);
     setDataSheetOpen(true);
-  };
-
-  const scrollToInquiry = () => {
-    const el = document.getElementById('hardware-inquiry-form');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   return (
@@ -90,40 +81,28 @@ export const FlagshipShowcase = () => {
             </Badge>
           </div>
 
-          {/* Dual Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          {/* Action CTA: View Engineering Data Sheet */}
+          <div className="flex items-center justify-center">
             <Button
-              onClick={scrollToInquiry}
-              size="lg"
-              className="rounded-xl shadow-lg bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-500 hover:to-sky-600 text-white gap-2 font-bold"
-            >
-              <span>Request Hardware Kit Specs</span>
-              <ArrowRight size={16} />
-            </Button>
-
-            <Button
-              variant="outline"
+              variant="default"
               size="lg"
               onClick={() => handleOpenDataSheet('door')}
-              className="rounded-xl gap-2 font-semibold"
+              className="rounded-xl gap-2 font-semibold shadow-md cursor-pointer"
             >
-              <FileText size={16} className="text-sky-600 dark:text-sky-400" />
+              <FileText size={16} />
               <span>View Technical Data Sheet</span>
             </Button>
           </div>
         </div>
 
-        {/* 2. INTERACTIVE HARDWARE SIMULATOR */}
-        <HardwareSimulator onRequestQuote={scrollToInquiry} />
+        {/* 2. INTERACTIVE HARDWARE SIMULATOR (DEMO) */}
+        <HardwareSimulator />
 
         {/* 3. DEEP-DIVE HARDWARE SPECS (SIDE-BY-SIDE GRID) */}
         <HardwareSpecsGrid onOpenDataSheet={handleOpenDataSheet} />
 
         {/* 4. SYSTEM ARCHITECTURE & INTEGRATION DIAGRAM */}
         <SystemArchitectureDiagram />
-
-        {/* 5. LEAD CAPTURE & ENGINEERING CONTACT FORM */}
-        <EngineeringLeadForm />
       </div>
 
       {/* Engineering Technical Data Sheet Modal */}

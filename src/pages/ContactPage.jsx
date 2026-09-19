@@ -19,7 +19,7 @@ export const ContactPage = () => {
             Home
           </button>
           <ChevronRight size={13} />
-          <span className="text-primary font-bold">Contact</span>
+          <span className="text-primary font-bold">Contact Us</span>
         </div>
 
         <div className="max-w-3xl">
@@ -30,7 +30,7 @@ export const ContactPage = () => {
             </Badge>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-foreground font-heading tracking-tight mb-4">
-            Contact & Headquarters
+            Contact Us
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
             Reach out directly to Futuretech Innotech (FTIT) for Tier-1 OEM production contracts, dealership distribution, precision electroplating orders, and fleet technical consultations.

@@ -53,7 +53,7 @@ export const Hero = () => {
               id="hero-contact-btn"
               className="rounded-full cursor-pointer"
             >
-              <span>Contact Headquarters</span>
+              <span>Contact Us</span>
             </Button>
 
             <Button

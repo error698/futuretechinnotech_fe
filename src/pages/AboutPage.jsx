@@ -34,7 +34,7 @@ export const AboutPage = () => {
             About Futuretech Innotech
           </h1>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Headquartered in New Delhi, Futuretech Innotech (FTIT) is India's premier Tier-1 manufacturer supplying OEM automotive accessories, precision electroplated trims, and advanced mechatronics to major automotive brands.
+            Based in New Delhi, Futuretech Innotech (FTIT) is India's premier Tier-1 manufacturer supplying OEM automotive accessories, precision electroplated trims, and advanced mechatronics to major automotive brands.
           </p>
         </div>
       </div>

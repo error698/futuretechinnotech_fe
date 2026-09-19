@@ -101,7 +101,7 @@ export const Footer = () => {
                   onClick={() => navigate('/contact')}
                   className="hover:text-foreground transition-colors cursor-pointer bg-transparent border-0 p-0 text-left text-muted-foreground"
                 >
-                  Headquarters & Inquiry
+                  Contact Us
                 </button>
               </li>
             </ul>

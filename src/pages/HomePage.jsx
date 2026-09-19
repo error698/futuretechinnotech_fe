@@ -77,7 +77,7 @@ export const HomePage = () => {
       cta: 'Read Our Story',
     },
     {
-      title: 'Contact & Headquarters',
+      title: 'Contact Us',
       path: '/contact',
       icon: MapPin,
       badge: 'New Delhi Campus',
@@ -187,7 +187,7 @@ export const HomePage = () => {
                 className="rounded-full shadow-md gap-2 cursor-pointer"
               >
                 <Mail size={16} />
-                <span>Contact Headquarters & Facility</span>
+                <span>Contact Us</span>
               </Button>
               <Button
                 variant="outline"
